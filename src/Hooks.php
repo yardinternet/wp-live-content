@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yard\LiveContent;
 
 use Yard\Hook\Action;
-use Yard\QueryBlock\Traits\Helpers;
+use Yard\LiveContent\Traits\Helpers;
 
 class Hooks
 {

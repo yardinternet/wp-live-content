@@ -8,8 +8,6 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Yard\Hook\Registrar;
 use Yard\LiveContent\View\Components\LiveContent;
-use Yard\OWC\Components\InternalData;
-use Yard\OWC\Components\PdcIcon;
 
 class LiveContentServiceProvider extends PackageServiceProvider
 {
@@ -19,8 +17,8 @@ class LiveContentServiceProvider extends PackageServiceProvider
 			->name('wp-live-content')
 			->hasConfigFile()
 			->hasViews()
-            ->hasRoute('web')
-            ->hasViewComponent('yard', LiveContent::class);
+			->hasRoute('web')
+			->hasViewComponent('yard', LiveContent::class);
 	}
 
 	public function packageRegistered(): void
@@ -28,13 +26,13 @@ class LiveContentServiceProvider extends PackageServiceProvider
 		//
 	}
 
-    /**
-     * @throws \ReflectionException
-     */
-    public function packageBooted(): void
+	/**
+	 * @throws \ReflectionException
+	 */
+	public function packageBooted(): void
 	{
-        (new Registrar([
-                Hooks::class
-        ]))->registerHooks();
+		(new Registrar([
+			Hooks::class,
+		]))->registerHooks();
 	}
 }

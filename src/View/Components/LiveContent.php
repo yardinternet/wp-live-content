@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yard\LiveContent\View\Components;
 
-use Closure;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -23,7 +23,7 @@ class LiveContent extends Component
 		});
 	}
 
-	public function render(): View|Closure|string
+	public function render(): View|Factory
 	{
 		return view('wp-live-content::components.live-content');
 	}
