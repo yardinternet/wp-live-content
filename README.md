@@ -47,5 +47,5 @@ wp acorn vendor:publish --provider="Yard\LiveContent\LiveContentServiceProvider"
 From a Blade template:
 
 ```blade
-<x-yard-live-content :postData="$postData" />
+<x-yard-live-content post-id="{{ $postId }}" />
 ```
