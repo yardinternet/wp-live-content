@@ -32,7 +32,10 @@ class Hooks
 					'id' => 'live-content',
 					'title' => 'Stuur push bericht',
 					'meta' => [
-						'onclick' => 'fetch("/update-post?id=' . $post->ID . '", { method: "POST" }).then(response => { if (response.ok) { alert("Push bericht verstuurd!"); } else { alert("Het sturen van een push bericht is mislukt."); } })',
+						'onclick' => sprintf(
+							'fetch("%s", { method: "POST" }).then(response => { if (response.ok) { alert("Push bericht verstuurd!"); } else { alert("Het sturen van een push bericht is mislukt."); } })',
+							route('yard.live-content.update', ['id' => $post->ID])
+						),
 					],
 				]
 			);
