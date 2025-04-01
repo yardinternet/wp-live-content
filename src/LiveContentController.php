@@ -23,11 +23,18 @@ class LiveContentController extends Controller
 	{
 		$postId = $request->query('id');
 
+		if (! is_numeric($postId)) {
+			return response()->json(['message' => 'Post id must be an integer'], 400);
+		}
+
 		set_transient('post_updated_' . $postId, 1);
 
 		return response()->json(['message' => 'Post with id ' . $postId . ' has been updated']);
 	}
 
+	/**
+	 * @throws \Throwable
+	 */
 	public function stream(Request $request): void
 	{
 		header('X-Accel-Buffering: no');
@@ -67,6 +74,12 @@ class LiveContentController extends Controller
 		delete_transient('post_updated_' . $postId);
 
 		$view = view('wp-live-content::partials.notification', ['postId' => $postId]);
+
+		if (! $view instanceof View) {
+			$this->sendEvent('error', 'Error rendering view');
+			$this->sendEvent('close', 'connection closed');
+			exit;
+		}
 
 		$html = str_replace(["\n", "\t"], '', $view->render());
 
