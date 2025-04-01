@@ -1,11 +1,11 @@
 {
-	"name": "yard/skeleton-package",
+	"name": "yard/wp-live-content",
 	"type": "package",
-	"description": ":package_description",
+	"description": "Send push notifications to the frontend when the post content has changed.",
 	"license": "MIT",
 	"support": {
-		"source": "https://github.com/yardinternet/skeleton-package",
-		"issues": "https://github.com/yardinternet/skeleton-package/issues"
+		"source": "https://github.com/yardinternet/wp-live-content",
+		"issues": "https://github.com/yardinternet/wp-live-content/issues"
 	},
 	"config": {
 		"sort-packages": true,
@@ -31,12 +31,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Yard\\SkeletonPackage\\": "src/"
+			"Yard\\LiveContent\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Yard\\SkeletonPackage\\Tests\\": "tests/"
+			"Yard\\LiveContent\\Tests\\": "tests/"
 		}
 	},
 	"scripts": {
@@ -56,7 +56,7 @@
 	"extra": {
 		"acorn": {
 			"providers": [
-				"Yard\\SkeletonPackage\\SkeletonPackageServiceProvider"
+				"Yard\\LiveContent\\LiveContentServiceProvider"
 			]
 		}
 	}
