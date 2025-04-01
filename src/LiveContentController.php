@@ -9,16 +9,14 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Yard\Data\PostData;
 
 class LiveContentController extends Controller
 {
 	public function content(Request $request): View|Factory
 	{
 		$postId = $request->query('id');
-		$postData = PostData::from(get_post($postId));
-
-		return view('wp-live-content::components.live-content', ['postData' => $postData]);
+		
+		return view('wp-live-content::components.live-content', ['postId' => $postId]);
 	}
 
 	public function update(Request $request): JsonResponse
@@ -38,18 +36,16 @@ class LiveContentController extends Controller
 
 		$postId = (int) $request->query('id');
 
-		$post = get_post($postId);
-
-		if (null === $post || ! is_a($post, 'WP_Post')) {
-			$this->sendEvent('error', 'Post not found');
+		if (empty($postId)) {
+			$this->sendEvent('error', 'Post id is required');
 			$this->sendEvent('close', 'connection closed');
 			exit;
 		}
 
-		$postData = PostData::from(get_post($postId));
+		$post = get_post($postId);
 
-		if (empty($postId)) {
-			$this->sendEvent('error', 'Post id is required');
+		if (null === $post || ! is_a($post, 'WP_Post')) {
+			$this->sendEvent('error', 'Post not found');
 			$this->sendEvent('close', 'connection closed');
 			exit;
 		}
@@ -70,7 +66,7 @@ class LiveContentController extends Controller
 
 		delete_transient('post_updated_' . $postId);
 
-		$view = view('wp-live-content::partials.notification', ['postData' => $postData]);
+		$view = view('wp-live-content::partials.notification', ['postId' => $postId]);
 
 		$html = str_replace(["\n", "\t"], '', $view->render());
 
