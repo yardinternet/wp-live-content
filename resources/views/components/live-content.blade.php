@@ -1,9 +1,9 @@
 <div id="live-content">
     <div
         hx-ext="sse"
-        sse-connect="{{ route('yard.live-content.stream', ['id' => $postData->id]) }}"
+        sse-connect="{{ route('yard.live-content.stream', ['id' => $postId]) }}"
         sse-swap="update"
         sse-close="close">
     </div>
-    {!! $postData->content() !!}
+    {!! apply_filters('the_content', get_the_content(null, false, $postId)) !!}
 </div>

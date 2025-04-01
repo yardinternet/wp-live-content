@@ -7,11 +7,10 @@ namespace Yard\LiveContent\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Yard\Data\PostData;
 
 class LiveContent extends Component
 {
-	public function __construct(public PostData $postData)
+	public function __construct(public int $postId)
 	{
 		$this->registerHTMX();
 	}

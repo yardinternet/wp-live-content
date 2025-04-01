@@ -1,5 +1,5 @@
 <button
-    hx-post="{{ route('yard.live-content.content', ['id' => $postData->id]) }}"
+    hx-post="{{ route('yard.live-content.content', ['id' => $postId]) }}"
     hx-swap="outerHTML"
     hx-target="#live-content"
     class="w-full bg-primary text-white p-4 text-center">
