@@ -10,7 +10,7 @@ use Yard\LiveContent\Traits\Helpers;
 class Hooks
 {
 	use Helpers;
-	
+
 	#[Action('admin_bar_menu', 999)]
 	public function addButtonToAdminBar(): void
 	{
@@ -22,11 +22,11 @@ class Hooks
 			! is_a($wp_admin_bar, 'WP_Admin_Bar')) {
 			return;
 		}
-		
+
 		// @var array $postTypes
 		$postTypes = config('wp-live-content.post-types', []);
 
-		if (in_array('openpub-item', $postTypes)) {
+		if (in_array($post->post_type, $postTypes)) {
 			$wp_admin_bar->add_menu(
 				[
 					'id' => 'live-content',
