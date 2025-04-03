@@ -49,14 +49,16 @@ class Hooks
 			'htmx',
 			$this->appendToBaseUrl('/yard/live-content/assets/js/htmx'),
 			[],
-			'2.0.4'
+			'2.0.4',
+			true
 		);
 
 		wp_register_script(
 			'htmx-sse',
 			$this->appendToBaseUrl('/yard/live-content/assets/js/htmx-sse'),
 			['htmx'],
-			'2.2.3'
+			'2.2.3',
+			true
 		);
 	}
 }
