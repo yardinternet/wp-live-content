@@ -49,3 +49,7 @@ From a Blade template:
 ```blade
 <x-yard-live-content post-id="{{ $postId }}" />
 ```
+
+## About us
+
+[![banner](https://raw.githubusercontent.com/yardinternet/.github/refs/heads/main/profile/assets/small-banner-github.svg)](https://www.yard.nl/werken-bij/)
