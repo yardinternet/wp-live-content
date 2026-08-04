@@ -12,7 +12,6 @@ Route::prefix('yard/live-content')
 			->group(
 				function () {
 					Route::get('/assets/js/htmx', 'htmx')->name('yard.live-content.assets.htmx');
-					Route::get('/assets/js/htmx-sse', 'htmxSse')->name('yard.live-content.assets.htmx-sse');
 				}
 			);
 
@@ -20,7 +19,6 @@ Route::prefix('yard/live-content')
 			->group(function () {
 				Route::post('content', 'content')->name('yard.live-content.content');
 				Route::post('update', 'update')->name('yard.live-content.update');
-				Route::get('stream', 'stream')->name('yard.live-content.stream');
 				Route::get('poll', 'poll')->name('yard.live-content.poll');
 			});
 	});

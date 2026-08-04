@@ -13,9 +13,4 @@ class AssetController extends Controller
 	{
 		return response()->file(__DIR__.'/../resources/scripts/htmx.js', ['Content-Type' => 'application/javascript']);
 	}
-
-	public function htmxSse(): BinaryFileResponse
-	{
-		return response()->file(__DIR__.'/../resources/scripts/sse.js', ['Content-Type' => 'application/javascript']);
-	}
 }
