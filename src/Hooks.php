@@ -23,6 +23,10 @@ class Hooks
 			return;
 		}
 
+		if (! current_user_can('edit_post', $post->ID)) {
+			return;
+		}
+
 		// @var array $postTypes
 		$postTypes = config('wp-live-content.post-types', []);
 
