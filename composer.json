@@ -1,7 +1,7 @@
 {
 	"name": "yard/wp-live-content",
 	"type": "package",
-	"description": "Send push notifications to the frontend when the post content has changed.",
+	"description": "Notify visitors via htmx polling when the post content has changed.",
 	"license": "MIT",
 	"support": {
 		"source": "https://github.com/yardinternet/wp-live-content",
