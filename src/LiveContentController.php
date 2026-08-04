@@ -29,6 +29,10 @@ class LiveContentController extends Controller
 			return response()->json(['message' => 'Post id must be a positive integer'], 400);
 		}
 
+		if (! wp_verify_nonce((string) $request->header('X-WP-Nonce', ''), 'yard-live-content-update')) {
+			return response()->json(['message' => 'Invalid nonce'], 403);
+		}
+
 		if (! current_user_can('edit_post', $postId)) {
 			return response()->json(['message' => 'You are not allowed to push updates for this post'], 403);
 		}

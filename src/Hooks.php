@@ -37,8 +37,9 @@ class Hooks
 					'title' => 'Stuur push bericht',
 					'meta' => [
 						'onclick' => sprintf(
-							'fetch("%s", { method: "POST" }).then(response => { if (response.ok) { alert("Push bericht verstuurd!"); } else { alert("Het sturen van een push bericht is mislukt."); } })',
-							'/yard/live-content/update?id=' .  $post->ID
+							'fetch("%s", { method: "POST", headers: { "X-WP-Nonce": "%s" } }).then(response => { if (response.ok) { alert("Push bericht verstuurd!"); } else { alert("Het sturen van een push bericht is mislukt."); } })',
+							'/yard/live-content/update?id=' . $post->ID,
+							wp_create_nonce('yard-live-content-update')
 						),
 					],
 				]
