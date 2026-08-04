@@ -21,5 +21,6 @@ Route::prefix('yard/live-content')
 				Route::post('content', 'content')->name('yard.live-content.content');
 				Route::post('update', 'update')->name('yard.live-content.update');
 				Route::get('stream', 'stream')->name('yard.live-content.stream');
+				Route::get('poll', 'poll')->name('yard.live-content.poll');
 			});
 	});

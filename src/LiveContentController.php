@@ -8,7 +8,9 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Webmozart\Assert\Assert;
 
 class LiveContentController extends Controller
 {
@@ -98,5 +100,41 @@ class LiveContentController extends Controller
 		}
 
 		flush();
+	}
+
+	/**
+	 * @throws \Throwable
+	 */
+	public function poll(Request $request): Response
+	{
+		$postId = $request->query('id');
+		$since = $request->query('since');
+
+		if (! is_numeric($postId) || ! is_numeric($since)) {
+			return $this->pollResponse('', 400);
+		}
+
+		$post = get_post((int) $postId);
+
+		if (null === $post || ! is_a($post, 'WP_Post')) {
+			return $this->pollResponse('', 404);
+		}
+
+		$pushedAt = (int) get_transient('post_updated_' . (int) $postId);
+
+		if ((int) $since >= $pushedAt) {
+			return $this->pollResponse('', 204);
+		}
+
+		$view = view('wp-live-content::partials.notification', ['postId' => (int) $postId]);
+
+		Assert::isInstanceOf($view, View::class);
+
+		return $this->pollResponse($view->render(), 200);
+	}
+
+	private function pollResponse(string $content, int $status): Response
+	{
+		return response($content, $status, ['Cache-Control' => 'no-store']);
 	}
 }
