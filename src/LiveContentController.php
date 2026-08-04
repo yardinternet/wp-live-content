@@ -33,7 +33,7 @@ class LiveContentController extends Controller
 			return response()->json(['message' => 'You are not allowed to push updates for this post'], 403);
 		}
 
-		set_transient('post_updated_' . $postId, time());
+		set_transient('post_updated_' . $postId, time(), DAY_IN_SECONDS);
 
 		return response()->json(['message' => 'Post with id ' . $postId . ' has been updated']);
 	}

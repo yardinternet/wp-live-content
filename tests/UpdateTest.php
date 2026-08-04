@@ -24,7 +24,7 @@ it('stores the push timestamp when the user can edit the post', function () {
 	]);
 	\WP_Mock::userFunction('set_transient', [
 		'times' => 1,
-		'args' => ['post_updated_5', \Mockery::on(fn ($value) => is_int($value) && 1 < $value)],
+		'args' => ['post_updated_5', \Mockery::on(fn ($value) => is_int($value) && 1 < $value), DAY_IN_SECONDS],
 		'return' => true,
 	]);
 
