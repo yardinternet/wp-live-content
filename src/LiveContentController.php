@@ -23,13 +23,11 @@ class LiveContentController extends Controller
 
 	public function update(Request $request): JsonResponse
 	{
-		$postId = $request->query('id');
+		$postId = filter_var($request->query('id'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
-		if (! is_numeric($postId)) {
-			return response()->json(['message' => 'Post id must be an integer'], 400);
+		if (false === $postId) {
+			return response()->json(['message' => 'Post id must be a positive integer'], 400);
 		}
-
-		$postId = (int) $postId;
 
 		if (! current_user_can('edit_post', $postId)) {
 			return response()->json(['message' => 'You are not allowed to push updates for this post'], 403);
@@ -45,26 +43,26 @@ class LiveContentController extends Controller
 	 */
 	public function poll(Request $request): Response
 	{
-		$postId = $request->query('id');
-		$since = $request->query('since');
+		$postId = filter_var($request->query('id'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+		$since = filter_var($request->query('since'), FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
 
-		if (! is_numeric($postId) || ! is_numeric($since)) {
+		if (false === $postId || false === $since) {
 			return $this->pollResponse('', 400);
 		}
 
-		$post = get_post((int) $postId);
+		$post = get_post($postId);
 
 		if (null === $post || ! is_a($post, 'WP_Post')) {
 			return $this->pollResponse('', 404);
 		}
 
-		$pushedAt = (int) get_transient('post_updated_' . (int) $postId);
+		$pushedAt = (int) get_transient('post_updated_' . $postId);
 
-		if ((int) $since >= $pushedAt) {
+		if ($since >= $pushedAt) {
 			return $this->pollResponse('', 204);
 		}
 
-		$view = view('wp-live-content::partials.notification', ['postId' => (int) $postId]);
+		$view = view('wp-live-content::partials.notification', ['postId' => $postId]);
 
 		Assert::isInstanceOf($view, View::class);
 

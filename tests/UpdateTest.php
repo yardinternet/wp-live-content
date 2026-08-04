@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-it('returns 400 when id is not numeric', function () {
-	$this->post('/yard/live-content/update?id=abc')
+it('returns 400 when id is not a valid post id', function (string $id) {
+	$this->post('/yard/live-content/update?id=' . $id)
 		->assertStatus(400);
-});
+})->with(['abc', '5.5', '5e2', '-1', '0']);
 
 it('returns 403 when the user cannot edit the post', function () {
 	\WP_Mock::userFunction('current_user_can', [
