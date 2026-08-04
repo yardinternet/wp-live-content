@@ -19,7 +19,6 @@ class LiveContent extends Component
 	{
 		add_action('wp_enqueue_scripts', function (): void {
 			wp_enqueue_script('htmx');
-			wp_enqueue_script('htmx-sse');
 		});
 	}
 
