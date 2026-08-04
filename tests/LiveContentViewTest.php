@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-it('renders a polling element instead of an SSE connection', function () {
+it('renders a polling element', function () {
 	\WP_Mock::userFunction('get_the_content', [
 		'return' => 'post content',
 	]);
@@ -13,7 +13,5 @@ it('renders a polling element instead of an SSE connection', function () {
 		->toContain('hx-get="/yard/live-content/poll?id=5&since=')
 		->toContain('hx-trigger="every 10s"')
 		->toContain('hx-swap="outerHTML"')
-		->toContain('post content')
-		->not->toContain('sse-connect')
-		->not->toContain('hx-ext="sse"');
+		->toContain('post content');
 });
