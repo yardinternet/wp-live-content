@@ -29,7 +29,13 @@ class LiveContentController extends Controller
 			return response()->json(['message' => 'Post id must be an integer'], 400);
 		}
 
-		set_transient('post_updated_' . $postId, 1);
+		$postId = (int) $postId;
+
+		if (! current_user_can('edit_post', $postId)) {
+			return response()->json(['message' => 'You are not allowed to push updates for this post'], 403);
+		}
+
+		set_transient('post_updated_' . $postId, time());
 
 		return response()->json(['message' => 'Post with id ' . $postId . ' has been updated']);
 	}
