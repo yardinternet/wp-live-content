@@ -12,15 +12,15 @@ it('returns 400 when since is missing', function () {
 		->assertStatus(400);
 });
 
-it('returns 400 when id is not numeric', function () {
-	$this->get('/yard/live-content/poll?id=abc&since=100')
+it('returns 400 when id is not a valid post id', function (string $id) {
+	$this->get('/yard/live-content/poll?id=' . $id . '&since=100')
 		->assertStatus(400);
-});
+})->with(['abc', '5.5', '5e2', '-1', '0']);
 
-it('returns 400 when since is not numeric', function () {
-	$this->get('/yard/live-content/poll?id=5&since=abc')
+it('returns 400 when since is not a valid timestamp', function (string $since) {
+	$this->get('/yard/live-content/poll?id=5&since=' . $since)
 		->assertStatus(400);
-});
+})->with(['abc', '5.5', '-1']);
 
 it('returns 404 when the post does not exist', function () {
 	\WP_Mock::userFunction('get_post', [
