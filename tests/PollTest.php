@@ -17,6 +17,11 @@ it('returns 400 when id is not numeric', function () {
 		->assertStatus(400);
 });
 
+it('returns 400 when since is not numeric', function () {
+	$this->get('/yard/live-content/poll?id=5&since=abc')
+		->assertStatus(400);
+});
+
 it('returns 404 when the post does not exist', function () {
 	\WP_Mock::userFunction('get_post', [
 		'args' => [5],
