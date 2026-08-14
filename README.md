@@ -36,11 +36,25 @@ To install this package using Composer, follow these steps:
     wp acorn package:discover
     ```
 
-You can publish the config file with:
+## Configuration
+
+Live content is opt-in per post type, so publish the config file to declare which post types it applies to:
 
 ```shell
 wp acorn vendor:publish --provider="Yard\LiveContent\LiveContentServiceProvider"
 ```
+
+This writes `config/wp-live-content.php` to your theme. List the post types there:
+
+```php
+return [
+    'post-types' => [
+        'openpub-item',
+    ],
+];
+```
+
+The post types you list here decide where the **Stuur push bericht** button shows up in the block editor. Without this file the package falls back to its own default, which only covers `openpub-item`.
 
 ## Usage
 
@@ -50,7 +64,7 @@ From a Blade template:
 <x-yard-live-content post-id="{{ $postId }}" />
 ```
 
-Editors send a push notification with the **Stuur push bericht** button under **Status & visibility** in the block editor. The button appears for the post types listed in `config/wp-live-content.php`.
+Editors send a push notification with the **Stuur push bericht** button under **Status & visibility** in the block editor.
 
 ## About us
 
