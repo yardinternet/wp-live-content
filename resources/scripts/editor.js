@@ -2,8 +2,7 @@
 	const {registerPlugin} = wp.plugins;
 	const {Button} = wp.components;
 	const {createElement: el, useState} = wp.element;
-	// wp.editor hosts PluginPostStatusInfo since WP 6.6; before that it lived in wp.editPost.
-	const PluginPostStatusInfo = (wp.editor && wp.editor.PluginPostStatusInfo) || wp.editPost.PluginPostStatusInfo;
+	const {PluginPostStatusInfo} = wp.editor;
 
 	function PushButton() {
 		const [busy, setBusy] = useState(false);

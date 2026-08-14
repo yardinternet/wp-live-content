@@ -4,26 +4,10 @@ declare(strict_types=1);
 
 use Yard\LiveContent\Hooks;
 
-function screen(string $postType): stdClass
-{
-	$screen = new stdClass();
-	$screen->post_type = $postType;
-
-	return $screen;
-}
-
-function editorPost(int $id): Mockery\MockInterface
-{
-	$post = Mockery::mock('WP_Post');
-	$post->ID = $id;
-
-	return $post;
-}
-
 it('does not enqueue the editor script for post types outside the config', function () {
 	config()->set('wp-live-content.post-types', ['openpub-item']);
 
-	\WP_Mock::userFunction('get_current_screen', ['return' => screen('page')]);
+	\WP_Mock::userFunction('get_current_screen', ['return' => editorScreen('page')]);
 	\WP_Mock::userFunction('get_post', ['return' => editorPost(5)]);
 	\WP_Mock::userFunction('wp_enqueue_script', ['times' => 0]);
 
@@ -33,7 +17,7 @@ it('does not enqueue the editor script for post types outside the config', funct
 it('does not enqueue the editor script when the user cannot edit the post', function () {
 	config()->set('wp-live-content.post-types', ['openpub-item']);
 
-	\WP_Mock::userFunction('get_current_screen', ['return' => screen('openpub-item')]);
+	\WP_Mock::userFunction('get_current_screen', ['return' => editorScreen('openpub-item')]);
 	\WP_Mock::userFunction('get_post', ['return' => editorPost(5)]);
 	\WP_Mock::userFunction('current_user_can', [
 		'args' => ['edit_post', 5],
@@ -48,7 +32,7 @@ it('enqueues the editor script and inlines the nonce before it', function () {
 	config()->set('wp-live-content.post-types', ['openpub-item']);
 	config()->set('app.url', 'https://example.com');
 
-	\WP_Mock::userFunction('get_current_screen', ['return' => screen('openpub-item')]);
+	\WP_Mock::userFunction('get_current_screen', ['return' => editorScreen('openpub-item')]);
 	\WP_Mock::userFunction('get_post', ['return' => editorPost(5)]);
 	\WP_Mock::userFunction('current_user_can', [
 		'args' => ['edit_post', 5],
@@ -65,7 +49,7 @@ it('enqueues the editor script and inlines the nonce before it', function () {
 		'args' => [
 			'yard-live-content-editor',
 			'https://example.com/yard/live-content/assets/js/editor',
-			['wp-components', 'wp-data', 'wp-edit-post', 'wp-editor', 'wp-element', 'wp-plugins'],
+			['wp-components', 'wp-data', 'wp-editor', 'wp-element', 'wp-plugins'],
 			Mockery::type('string'),
 			true,
 		],

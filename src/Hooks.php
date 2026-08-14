@@ -34,7 +34,7 @@ class Hooks
 		wp_enqueue_script(
 			self::EDITOR_HANDLE,
 			$this->appendToBaseUrl('/yard/live-content/assets/js/editor'),
-			['wp-components', 'wp-data', 'wp-edit-post', 'wp-editor', 'wp-element', 'wp-plugins'],
+			['wp-components', 'wp-data', 'wp-editor', 'wp-element', 'wp-plugins'],
 			(string) filemtime(__DIR__ . '/../resources/scripts/editor.js'),
 			true
 		);
