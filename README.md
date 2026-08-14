@@ -8,6 +8,7 @@
 
 ## Requirements
 
+- [WordPress](https://wordpress.org) >= 6.6
 - [Sage](https://github.com/roots/sage) >= 10.0
 - [Acorn](https://github.com/roots/acorn) >= 4.0
 
