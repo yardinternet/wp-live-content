@@ -33,7 +33,19 @@
 		return el(
 			PluginPostStatusInfo,
 			null,
-			el(Button, {variant: 'secondary', isBusy: busy, disabled: busy, onClick: push}, 'Stuur push bericht')
+			el(
+				Button,
+				{
+					variant: 'secondary',
+					isBusy: busy,
+					disabled: busy,
+					onClick: push,
+					// PluginPostStatusInfo drops its children into a PanelRow, a space-between flex row,
+					// so a lone button stays shrink-to-fit on the left unless it grows and centres itself.
+					style: {flex: 1, justifyContent: 'center'},
+				},
+				'Stuur push bericht'
+			)
 		);
 	}
 
