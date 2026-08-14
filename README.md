@@ -50,6 +50,8 @@ From a Blade template:
 <x-yard-live-content post-id="{{ $postId }}" />
 ```
 
+Editors send a push notification with the **Stuur push bericht** button under **Status & visibility** in the block editor. The button appears for the post types listed in `config/wp-live-content.php`.
+
 ## About us
 
 [![banner](https://raw.githubusercontent.com/yardinternet/.github/refs/heads/main/profile/assets/small-banner-github.svg)](https://www.yard.nl/werken-bij/)
