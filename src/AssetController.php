@@ -13,4 +13,9 @@ class AssetController extends Controller
 	{
 		return response()->file(__DIR__.'/../resources/scripts/htmx.js', ['Content-Type' => 'application/javascript']);
 	}
+
+	public function editor(): BinaryFileResponse
+	{
+		return response()->file(__DIR__.'/../resources/scripts/editor.js', ['Content-Type' => 'application/javascript']);
+	}
 }

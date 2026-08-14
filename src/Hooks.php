@@ -11,15 +11,19 @@ class Hooks
 {
 	use Helpers;
 
-	#[Action('admin_bar_menu', 999)]
-	public function addButtonToAdminBar(): void
-	{
-		global $wp_admin_bar;
-		global $post;
+	private const EDITOR_HANDLE = 'yard-live-content-editor';
 
-		if (
-			! is_a($post, 'WP_Post') ||
-			! is_a($wp_admin_bar, 'WP_Admin_Bar')) {
+	#[Action('enqueue_block_editor_assets')]
+	public function enqueueBlockEditorAssets(): void
+	{
+		$screen = get_current_screen();
+		$post = get_post();
+
+		if (null === $screen || ! $post instanceof \WP_Post) {
+			return;
+		}
+
+		if (! in_array($screen->post_type, (array) config('wp-live-content.post-types', []), true)) {
 			return;
 		}
 
@@ -27,24 +31,22 @@ class Hooks
 			return;
 		}
 
-		// @var array $postTypes
-		$postTypes = config('wp-live-content.post-types', []);
+		wp_enqueue_script(
+			self::EDITOR_HANDLE,
+			$this->appendToBaseUrl('/yard/live-content/assets/js/editor'),
+			['wp-components', 'wp-data', 'wp-edit-post', 'wp-editor', 'wp-element', 'wp-plugins'],
+			(string) filemtime(__DIR__ . '/../resources/scripts/editor.js'),
+			true
+		);
 
-		if (in_array($post->post_type, $postTypes)) {
-			$wp_admin_bar->add_menu(
-				[
-					'id' => 'live-content',
-					'title' => 'Stuur push bericht',
-					'meta' => [
-						'onclick' => sprintf(
-							'fetch("%s", { method: "POST", headers: { "X-WP-Nonce": "%s" } }).then(response => { if (response.ok) { alert("Push bericht verstuurd!"); } else { alert("Het sturen van een push bericht is mislukt."); } })',
-							'/yard/live-content/update?id=' . $post->ID,
-							wp_create_nonce('yard-live-content-update')
-						),
-					],
-				]
-			);
-		}
+		wp_add_inline_script(
+			self::EDITOR_HANDLE,
+			sprintf(
+				'window.yardLiveContent = %s;',
+				wp_json_encode(['nonce' => wp_create_nonce('yard-live-content-update')])
+			),
+			'before'
+		);
 	}
 
 	#[Action('wp_enqueue_scripts')]

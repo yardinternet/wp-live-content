@@ -12,6 +12,7 @@ Route::prefix('yard/live-content')
 			->group(
 				function () {
 					Route::get('/assets/js/htmx', 'htmx')->name('yard.live-content.assets.htmx');
+					Route::get('/assets/js/editor', 'editor')->name('yard.live-content.assets.editor');
 				}
 			);
 
