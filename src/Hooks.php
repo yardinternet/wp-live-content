@@ -43,7 +43,7 @@ class Hooks
 			self::EDITOR_HANDLE,
 			sprintf(
 				'window.yardLiveContent = %s;',
-				wp_json_encode(['nonce' => wp_create_nonce('yard-live-content-update')])
+				wp_json_encode(['nonce' => wp_create_nonce(LiveContentController::NONCE_ACTION)])
 			),
 			'before'
 		);

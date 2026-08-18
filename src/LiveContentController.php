@@ -14,6 +14,8 @@ use Webmozart\Assert\Assert;
 
 class LiveContentController extends Controller
 {
+	public const NONCE_ACTION = 'yard-live-content-update';
+
 	public function content(Request $request): View|Factory
 	{
 		$postId = $request->query('id');
@@ -29,7 +31,7 @@ class LiveContentController extends Controller
 			return response()->json(['message' => 'Post id must be a positive integer'], 400);
 		}
 
-		if (! wp_verify_nonce((string) $request->header('X-WP-Nonce', ''), 'yard-live-content-update')) {
+		if (! wp_verify_nonce((string) $request->header('X-WP-Nonce', ''), self::NONCE_ACTION)) {
 			return response()->json(['message' => 'Invalid nonce'], 403);
 		}
 

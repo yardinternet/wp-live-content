@@ -67,6 +67,8 @@ From a Blade template:
 
 Editors send a push notification with the **Stuur push bericht** button under **Status & visibility** in the block editor.
 
+<img src="docs/images/push-button.png" alt="The Stuur push bericht button in the block editor status panel" width="320">
+
 ## About us
 
 [![banner](https://raw.githubusercontent.com/yardinternet/.github/refs/heads/main/profile/assets/small-banner-github.svg)](https://www.yard.nl/werken-bij/)
